@@ -1,3 +1,17 @@
+## Description
+This program is intended for Jira Software Cloud users who want to track Work Logs on issues in aggregate, and
+import this data into a spreadsheet for analysis, visualization, etc.
+
+It uses the Jira API for data retrieval, Keyring for token storage, YAML for configuration management, and Pandas for 
+CSV conversion.
+
+The fields requested are configurable by the user. All data retrieved is saved to a CSV in the results directory.
+
+The time this takes to run will be proportionate to the number of issues (not necessarily the number of worklogs) and
+the number of queries needed to retrieve the Jira data. If you are experiencing long lag times with large numbers of
+issues, you could try increasing the `jira_instance.max_results` setting in config.yaml to increase the search page size.
+This will decrease the run time to an extent.
+
 ## Quickstart
 
 1. Install dependencies for python (developed in python 3.10)
@@ -51,4 +65,14 @@ fields:
   duedate: "issue due date"
   issuetype:
     name: "issue type"
+```
+
+## Running the program
+You can run the program from the command line within the installation directory, using:
+```shell
+python pull-worklogs.py
+```
+Or you can automatically open the results in your default csv editor with:
+```shell
+python pull-worklogs.py | xargs open
 ```
