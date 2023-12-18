@@ -39,7 +39,7 @@ issue_query: "worklogAuthor is not empty"
 fields:
   issue:
 
-## --- END REQUIRED CONFIG ELEMENTS ---
+    ## --- END REQUIRED CONFIG ELEMENTS ---
 
     id: "issue id"
     key: "issue key"
@@ -63,8 +63,8 @@ fields:
         key: "issue parent"
         fields:
           summary: "issue parent name"
-      worklog:      #REQUIRED - do not remove
-        worklogs:   #REQUIRED - do not remove
+      worklog: #REQUIRED - do not remove
+        worklogs: #REQUIRED - do not remove
           id: "worklog id"
           author:
             timeZone: "author timezone"
