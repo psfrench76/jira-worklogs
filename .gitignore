@@ -1,9 +1,10 @@
 tmp/
 .idea/
-hw4-frenchp/
 *.zip
 ._*
 .DS_Store
+results/worklogs*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
