@@ -1,2 +1,76 @@
-#Start with this configuration file, change the values to match your use case, and rename
-# the file to config.yaml
+#Copy this configuration file to config.yaml and edit in place there. It is strongly recommended to leave
+#sample-config.yaml unchanged to use as a reference when editing fields requested.
+
+# MINIMUM required configuration:
+#   - jira_instance.url (should be set to the url of your Jira instance. (Only tested for Jira Cloud - YMMV for Server)
+#   - jira_instance.user_email (the user email on Jira corresponding to the token you are using)
+#   - system_user (the OS user which owns the token password in your system password manager)
+#   - authentication token (NOT IN THIS FILE):
+#         Authentication token should be stored in system password manager (keychain for mac)
+#         jira-worklogs.token, with the username that is stored as system_user in the config
+#           note for mac: the default "login" keychain should be used, not "iCloud" (see example method to set below)
+#
+#         using keyring in python terminal:
+#         >>> import keyring
+#         >>> keyring.set_password('jira-worklogs.token', 'SYSTEM_USERNAME', 'TOKEN')
+
+## --- BEGIN REQUIRED CONFIG ELEMENTS - DO NOT DELETE ---
+
+jira_instance:
+  url: "https://[myinstance].atlassian.net"
+  user_email: "[user]@[mycompany.com]"
+  max_results: 50
+#system_user is the owner of the token in the system keyring
+system_user: "[sysuser]"
+
+#this will be passed to pandas.to_csv, which uses standard python format strings
+output_date_format: "%Y-%m-%d %H:%M:%S %Z"
+issue_query: "worklogAuthor is not empty"
+
+#Notes on structure: the structure of the fields requested below should directly mirror the structure of the JIRA
+# API response (see https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-search for samples)
+# The key in the (key, value) pair is the actual jira field id, and the value is the column header which will be
+# displayed in the resulting CSV. The column headers can be edited without consequence.
+
+# Fields can be added or removed without breaking, as long as the structure remains unchanged and identical to the API.
+
+# Caution: for fields that have a value that is an object (such as issuetype, status, etc), in order to use the name,
+# it will need to be identified as a sub-item in this list. (see examples below)
+fields:
+  issue:
+
+## --- END REQUIRED CONFIG ELEMENTS ---
+
+    id: "issue id"
+    key: "issue key"
+    fields:
+      duedate: "issue due date"
+      issuetype:
+        name: "issue type"
+      summary: "issue summary"
+      status:
+        name: "issue status"
+
+      # Insert any issue-level custom fields here. Example (remove comment):
+      # customfield_10047: "issue assignment due date/time"
+
+      # end custom fields
+      timeoriginalestimate: "issue original estimate (seconds)"
+      timetracking:
+        timeSpentSeconds: "issue total time spent (seconds)"
+        remainingEstimateSeconds: "issue remaining time (seconds)"
+      parent:
+        key: "issue parent"
+        fields:
+          summary: "issue parent name"
+      worklog:      #REQUIRED - do not remove
+        worklogs:   #REQUIRED - do not remove
+          id: "worklog id"
+          author:
+            timeZone: "author timezone"
+            emailAddress: "author email"
+            displayName: "author name"
+          started: "worklog time started"
+          created: "worklog time created"
+          comment: "worklog comment"
+          timeSpentSeconds: "worklog time spent"
