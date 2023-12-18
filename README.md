@@ -1,8 +1,12 @@
 ## Quickstart
 
-1. Install the keyring package for python:
+1. Install dependencies for python (developed in python 3.10)
 ```shell
 pip install keyring
+pip install jira
+pip install pytz
+pip install pandas
+pip install yaml
 ```
 2. Set up a Jira API token (see here: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
 3. Store the token securely in your system keyring (example for mac below, using the python terminal and the keyring 
