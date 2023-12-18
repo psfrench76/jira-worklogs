@@ -2,6 +2,7 @@
 
 # TODO:
 #   - make "./pull-worklogs.py | xargs open" usage easier
+#   - make results/sample.csv
 
 from jira import JIRA
 import keyring

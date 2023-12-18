@@ -7,6 +7,9 @@ CSV conversion.
 
 The fields requested are configurable by the user. All data retrieved is saved to a CSV in the results directory.
 
+In addition to fields on the worklogs, you can also use any issue or parent issue field which is present on the issue
+that the worklogs are connected to.
+
 The time this takes to run will be proportionate to the number of issues (not necessarily the number of worklogs) and
 the number of queries needed to retrieve the Jira data. If you are experiencing long lag times with large numbers of
 issues, you could try increasing the `jira_instance.max_results` setting in config.yaml to increase the search page size.
@@ -23,13 +26,13 @@ pip install pandas
 pip install yaml
 ```
 2. Set up a Jira API token (see here: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)
-3. Store the token securely in your system keyring (example for mac below, using the python terminal and the keyring 
+3. Store the token securely in your system keyring (example below, using the python terminal and the keyring 
 package -- be sure to replace the `SYSTEM_USERNAME` and `TOKEN` values
 ```python
 import keyring
 keyring.set_password('jira-worklogs.token', 'SYSTEM_USERNAME', 'TOKEN')
 ```
-4. Copy sample-config.yaml to config.yaml:\
+4. Copy sample-config.yaml to config.yaml:
 ```shell
 cp sample-config.yaml config.yaml
 ```
@@ -52,7 +55,7 @@ fields:
     fields:
       ...
 ```
-Note: This should not be undertaken without a general understanding of YAML, Jira fields, Python, etc. The structure of 
+Note: This should not be undertaken without a general understanding of YAML, Jira fields and API, Python, etc. The structure of 
 the fields requested must directly mirror the structure of the Jira API response 
 (see https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-search for samples) The key in the 
 (key, value) pair is the actual Jira field id, and the value is the column header which will be displayed in the 
